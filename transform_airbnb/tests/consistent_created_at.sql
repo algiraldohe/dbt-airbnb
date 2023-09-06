@@ -1,4 +1,10 @@
-WITH 
+SELECT * FROM {{ ref('dim_listing_cleansed') }} l
+INNER JOIN {{ ref('fct_reviews') }} r
+USING (listing_id)
+WHERE l.created_at >= r.review_date
+
+
+{# WITH 
 
 review_dates AS (
 
@@ -13,4 +19,4 @@ ORDER BY listing_id ASC
 
 SELECT * FROM review_dates rd
 LEFT JOIN created_at_listing cal ON cal.LISTING_ID = rd.LISTING_ID
-WHERE rd.first_review_date <= cal.created_at
+WHERE rd.first_review_date <= cal.created_at #}
